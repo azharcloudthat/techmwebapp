@@ -1,6 +1,6 @@
 # Weather Dashboard
 
-A simple Flask weather dashboard. Search for a city to view current conditions, an hourly outlook, and a 7-day forecast. Weather data comes from Open-Meteo; no API key is required.
+A simple Flask weather dashboard. Search for a city to view current conditions, an hourly outlook, and a 7-day forecast. The dashboard uses weather icons and changes its theme to match current conditions and nighttime. Weather data comes from Open-Meteo; no API key is required.
 
 ## Setup
 
