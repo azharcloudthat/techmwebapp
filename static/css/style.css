@@ -1,0 +1,322 @@
+:root {
+    --sky-top: #4a90e2;
+    --sky-bottom: #87ceeb;
+    --brand-accent: #e4002b; /* Tech Mahindra red accent */
+    --surface: rgba(255, 255, 255, 0.85);
+    --surface-border: rgba(255, 255, 255, 0.4);
+    --text-primary: #1b2733;
+    --text-secondary: #4a5a68;
+    --error-bg: #fdecea;
+    --error-text: #b3261e;
+    --radius: 16px;
+    --shadow: 0 20px 45px rgba(20, 40, 70, 0.25);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-primary);
+    background: linear-gradient(160deg, var(--sky-top) 0%, var(--sky-bottom) 55%, #d9f0ff 100%);
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px;
+}
+
+.dashboard {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+}
+
+.dashboard h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard h1::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin: 12px auto 0;
+    background: var(--brand-accent);
+    border-radius: 999px;
+}
+
+.search-bar {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    padding: 10px 12px;
+    color: var(--text-primary);
+}
+
+.search-bar button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--brand-accent);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.search-bar button:hover {
+    background: #c40025;
+}
+
+.search-bar button:active {
+    transform: scale(0.97);
+}
+
+.results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.placeholder {
+    color: #fff;
+    opacity: 0.9;
+    font-size: 1rem;
+}
+
+.state {
+    width: 100%;
+    border-radius: var(--radius);
+    padding: 16px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    color: var(--text-secondary);
+}
+
+.state.error {
+    background: var(--error-bg);
+    color: var(--error-text);
+    font-weight: 600;
+}
+
+.weather-results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.weather-results section {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.weather-results section {
+    border-radius: 8px;
+    text-align: left;
+}
+
+.section-kicker {
+    margin: 0 0 8px;
+    color: var(--brand-accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.location-name,
+.section-title {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.updated-time {
+    margin: 6px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.current-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.current-temperature {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.current-description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.current-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    border-top: 1px solid rgba(27, 39, 51, 0.12);
+    padding-top: 16px;
+}
+
+.detail-label,
+.daily-low {
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    text-align: right;
+}
+
+.section-title {
+    margin-bottom: 14px;
+    font-size: 1.1rem;
+}
+
+.hourly-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.hourly-item {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.62);
+    padding: 12px 6px;
+    text-align: center;
+}
+
+.forecast-time,
+.forecast-day {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.forecast-condition {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+}
+
+.forecast-temperature,
+.daily-high {
+    color: var(--text-primary);
+    font-size: 1.05rem;
+}
+
+.daily-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.daily-item {
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) minmax(120px, 1.5fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid rgba(27, 39, 51, 0.1);
+    padding: 12px 0;
+}
+
+.daily-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.forecast-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 480px) {
+    .dashboard {
+        gap: 16px;
+    }
+
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    .hourly-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .daily-item {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas:
+            "day high low"
+            "condition condition condition";
+        gap: 6px 10px;
+    }
+
+    .forecast-day {
+        grid-area: day;
+    }
+
+    .daily-item .forecast-condition {
+        grid-area: condition;
+    }
+
+    .daily-high {
+        grid-area: high;
+    }
+
+    .daily-low {
+        grid-area: low;
+    }
+}

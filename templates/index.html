@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="dashboard">
+        <h1>Weather Dashboard</h1>
+
+        <form id="search-form" class="search-bar">
+            <input
+                type="text"
+                id="city-input"
+                name="city"
+                placeholder="Enter a city name"
+                autocomplete="off"
+                required
+            >
+            <button type="submit" id="get-weather-btn">Get Weather</button>
+        </form>
+
+        <section id="results" class="results" aria-live="polite">
+            <p id="results-placeholder" class="placeholder">Search for a city to see its weather.</p>
+
+            <div id="loading-state" class="state hidden">Loading weather data&hellip;</div>
+
+            <div id="error-state" class="state error hidden"></div>
+
+            <div id="weather-results" class="weather-results hidden">
+                <section id="current-conditions" class="current-conditions"></section>
+                <section id="hourly-outlook" class="hourly-outlook"></section>
+                <section id="seven-day-forecast" class="seven-day-forecast"></section>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
