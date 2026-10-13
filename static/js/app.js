@@ -39,6 +39,28 @@ const weatherDescriptions = {
     99: 'Heavy thunderstorm with hail'
 };
 
+function weatherIcon(code, isDay = true) {
+    if (!isDay && code <= 1) return code === 0 ? '🌙' : '🌙☁️';
+    if (code === 0) return '☀️';
+    if (code === 1) return '🌤️';
+    if (code === 2) return '⛅';
+    if (code === 3) return '☁️';
+    if (code === 45 || code === 48) return '🌫️';
+    if (code >= 71 && code <= 77 || code === 85 || code === 86) return '❄️';
+    if (code >= 95) return '⛈️';
+    if (code >= 51 && code <= 67 || code >= 80 && code <= 82) return '🌧️';
+    return '🌡️';
+}
+
+function weatherTheme(code) {
+    if (code >= 95) return 'storm';
+    if (code >= 71 && code <= 77 || code === 85 || code === 86) return 'snow';
+    if (code >= 51 && code <= 67 || code >= 80 && code <= 82) return 'rain';
+    if (code === 45 || code === 48) return 'fog';
+    if (code === 0) return 'sunny';
+    return 'cloudy';
+}
+
 function createElement(tagName, className, text) {
     const element = document.createElement(tagName);
     if (className) element.className = className;
@@ -64,6 +86,7 @@ function formatDateTime(value, options) {
 function renderCurrent(data) {
     const current = data.current || {};
     const unit = data.unit || 'celsius';
+    const isDay = current.is_day !== 0;
     const location = [data.location?.name, data.location?.country]
         .filter(Boolean)
         .join(', ');
@@ -82,7 +105,10 @@ function renderCurrent(data) {
     );
 
     const summary = createElement('div', 'current-summary');
+    const icon = createElement('span', 'current-weather-icon', weatherIcon(current.weathercode, isDay));
+    icon.setAttribute('aria-hidden', 'true');
     summary.append(
+        icon,
         createElement('p', 'current-temperature', formatTemperature(current.temperature, unit)),
         createElement('p', 'current-description', describeWeather(current.weathercode))
     );
@@ -114,8 +140,11 @@ function renderHourly(data) {
     times.slice(startIndex, startIndex + 8).forEach((time, index) => {
         const dataIndex = startIndex + index;
         const item = createElement('article', 'hourly-item');
+        const icon = createElement('span', 'forecast-icon', weatherIcon(codes[dataIndex]));
+        icon.setAttribute('aria-hidden', 'true');
         item.append(
             createElement('span', 'forecast-time', formatDateTime(time, { hour: 'numeric' })),
+            icon,
             createElement('span', 'forecast-condition', describeWeather(codes[dataIndex])),
             createElement('strong', 'forecast-temperature', formatTemperature(temperatures[dataIndex], unit))
         );
@@ -141,8 +170,11 @@ function renderDaily(data) {
 
     dates.slice(0, 7).forEach((date, index) => {
         const item = createElement('article', 'daily-item');
+        const icon = createElement('span', 'forecast-icon', weatherIcon(codes[index]));
+        icon.setAttribute('aria-hidden', 'true');
         item.append(
             createElement('span', 'forecast-day', formatDateTime(date, { weekday: 'short', month: 'short', day: 'numeric' })),
+            icon,
             createElement('span', 'forecast-condition', describeWeather(codes[index])),
             createElement('strong', 'daily-high', formatTemperature(highs[index], unit)),
             createElement('span', 'daily-low', formatTemperature(lows[index], unit))
@@ -157,6 +189,9 @@ function renderDaily(data) {
 }
 
 function renderWeather(data) {
+    const current = data.current || {};
+    document.body.dataset.theme = weatherTheme(current.weathercode);
+    document.body.dataset.night = String(current.is_day === 0);
     renderCurrent(data);
     renderHourly(data);
     renderDaily(data);
