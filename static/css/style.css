@@ -1,6 +1,7 @@
 :root {
     --sky-top: #4a90e2;
     --sky-bottom: #87ceeb;
+    --sky-horizon: #d9f0ff;
     --brand-accent: #e4002b; /* Tech Mahindra red accent */
     --surface: rgba(255, 255, 255, 0.85);
     --surface-border: rgba(255, 255, 255, 0.4);
@@ -12,6 +13,55 @@
     --shadow: 0 20px 45px rgba(20, 40, 70, 0.25);
 }
 
+body[data-theme="sunny"] {
+    --sky-top: #f6a623;
+    --sky-bottom: #ffd166;
+    --sky-horizon: #fff1c1;
+    --brand-accent: #cf5b18;
+}
+
+body[data-theme="cloudy"] {
+    --sky-top: #64748b;
+    --sky-bottom: #94a3b8;
+    --sky-horizon: #e2e8f0;
+    --brand-accent: #53677e;
+}
+
+body[data-theme="fog"] {
+    --sky-top: #8395a7;
+    --sky-bottom: #b8c4cc;
+    --sky-horizon: #e8eef0;
+    --brand-accent: #53677e;
+}
+
+body[data-theme="rain"] {
+    --sky-top: #334e68;
+    --sky-bottom: #567c9a;
+    --sky-horizon: #b4d0e0;
+    --brand-accent: #245b82;
+}
+
+body[data-theme="snow"] {
+    --sky-top: #8ecae6;
+    --sky-bottom: #caf0f8;
+    --sky-horizon: #eafaff;
+    --brand-accent: #25779a;
+}
+
+body[data-theme="storm"] {
+    --sky-top: #25224a;
+    --sky-bottom: #49427b;
+    --sky-horizon: #9993b9;
+    --brand-accent: #50468a;
+}
+
+body[data-night="true"] {
+    --sky-top: #111827;
+    --sky-bottom: #252c4a;
+    --sky-horizon: #39405c;
+    --brand-accent: #e9a83b;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -21,8 +71,9 @@ body {
     min-height: 100vh;
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--text-primary);
-    background: linear-gradient(160deg, var(--sky-top) 0%, var(--sky-bottom) 55%, #d9f0ff 100%);
+    background: linear-gradient(160deg, var(--sky-top) 0%, var(--sky-bottom) 55%, var(--sky-horizon) 100%);
     background-attachment: fixed;
+    transition: background 0.6s ease;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -177,6 +228,11 @@ body {
     padding: 20px 0;
 }
 
+.current-weather-icon {
+    font-size: 4rem;
+    line-height: 1;
+}
+
 .current-temperature {
     margin: 0;
     font-size: 4rem;
@@ -232,6 +288,11 @@ body {
     text-align: center;
 }
 
+.forecast-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
 .forecast-time,
 .forecast-day {
     color: var(--text-secondary);
@@ -257,7 +318,7 @@ body {
 
 .daily-item {
     display: grid;
-    grid-template-columns: minmax(90px, 1fr) minmax(120px, 1.5fr) auto auto;
+    grid-template-columns: minmax(90px, 1fr) 30px minmax(120px, 1.5fr) auto auto;
     align-items: center;
     gap: 12px;
     border-top: 1px solid rgba(27, 39, 51, 0.1);
@@ -297,10 +358,10 @@ body {
     }
 
     .daily-item {
-        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-columns: minmax(0, 1fr) 28px auto auto;
         grid-template-areas:
-            "day high low"
-            "condition condition condition";
+            "day icon high low"
+            "condition condition condition condition";
         gap: 6px 10px;
     }
 
@@ -310,6 +371,10 @@ body {
 
     .daily-item .forecast-condition {
         grid-area: condition;
+    }
+
+    .daily-item .forecast-icon {
+        grid-area: icon;
     }
 
     .daily-high {
